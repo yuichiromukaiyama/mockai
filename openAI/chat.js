@@ -52,9 +52,9 @@ router.post("/v1/chat/completions", async (req, res) => {
   // If 'stream' is true, set up a Server-Sent Events stream
   if (stream) {
     // Set the headers for SSE
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
+    res.setHeader("Content-Type", "text/event-stream;charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache, no-transform");
+    res.setHeader("X-Accel-Buffering", "no");
 
     const data = {
       id: "chatcmpl-7UR4UcvmeD79Xva3UxkKkL2es6b5W",

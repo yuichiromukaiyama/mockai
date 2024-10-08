@@ -13,7 +13,7 @@ const delay = require("./utils/delay")
 const start = async () => {
   await loadRandomContents();
 
-  const port = process.env.SERVER_PORT || 5001;
+  const port = process.env.SERVER_PORT || 8000;
   app.use(express.json());
   app.use(chatRoutes);
   app.use(textRoutes);
