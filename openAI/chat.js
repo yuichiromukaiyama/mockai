@@ -1,16 +1,16 @@
 const express = require("express");
 const { getRandomContents } = require("../utils/randomContents");
 const { tokenize } = require("../utils/tokenize");
-const delay = require("../utils/delay")
+const delay = require("../utils/delay");
 
 const router = express.Router();
 
 router.post("/openai/deployments/:dummy/chat/completions", async (req, res) => {
-  const delayHeader = req.headers["x-set-response-delay-ms"]
+  const delayHeader = req.headers["x-set-response-delay-ms"];
 
-  let delayTime = parseInt(delayHeader) || 0
+  let delayTime = parseInt(delayHeader) || 0;
 
-  await delay(delayTime)
+  await delay(delayTime);
   const defaultMockType = process.env.MOCK_TYPE || "random";
   const {
     messages,
@@ -57,10 +57,11 @@ router.post("/openai/deployments/:dummy/chat/completions", async (req, res) => {
     res.setHeader("X-Accel-Buffering", "no");
 
     const data = {
-      id: "chatcmpl-7UR4UcvmeD79Xva3UxkKkL2es6b5W",
+      id: "chatcmpl-00000000000000000000000000000",
       object: "chat.completion.chunk",
       created: Date.now(),
       model: model,
+      system_fingerprint: "fp_000000000a",
       choices: [
         {
           index: 0,
@@ -68,7 +69,14 @@ router.post("/openai/deployments/:dummy/chat/completions", async (req, res) => {
             role: "assistant",
             content: "",
           },
-          finish_reason: null,
+          content_filter_results: {
+            hate: { filtered: false, severity: "safe" },
+            protected_material_code: { filtered: false, detected: false },
+            protected_material_text: { filtered: false, detected: false },
+            self_harm: { filtered: false, severity: "safe" },
+            sexual: { filtered: false, severity: "safe" },
+            violence: { filtered: false, severity: "safe" },
+          },
         },
       ],
     };
@@ -85,7 +93,9 @@ router.post("/openai/deployments/:dummy/chat/completions", async (req, res) => {
         clearInterval(intervalId);
         data.choices[0] = {
           delta: {},
+          index: 0,
           finish_reason: "stop",
+          content_filter_results: {},
         };
         res.write(`data: ${JSON.stringify(data)}\n\n`);
         res.write(`data: [DONE]\n\n`);
@@ -108,10 +118,11 @@ router.post("/openai/deployments/:dummy/chat/completions", async (req, res) => {
     }
 
     const response = {
-      id: "chatcmpl-2nYZXNHxx1PeK1u8xXcE1Fqr1U6Ve",
+      id: "chatcmpl-00000000000000000000000000000",
       object: "chat.completion",
-      created: Math.floor(Date.now() / 1000),
+      created: Date.now(),
       model: model,
+      system_fingerprint: "fp_000000000a",
       usage: {
         prompt_tokens: 10,
         completion_tokens: 50,
