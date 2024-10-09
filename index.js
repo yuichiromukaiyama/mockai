@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 const chatRoutes = require("./openAI/chat");
 const textRoutes = require("./openAI/text");
 const imgRoutes = require("./openAI/image");
@@ -15,6 +16,7 @@ const start = async () => {
 
   const port = process.env.SERVER_PORT || 8000;
   app.use(express.json());
+  app.use(morgan("tiny"));
   app.use(chatRoutes);
   app.use(textRoutes);
   app.use(imgRoutes);
