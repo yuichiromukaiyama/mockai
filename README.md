@@ -1,14 +1,13 @@
-# MockAI
+# MockAI for Azure OpenAI
 
 MockAI is a mock server for OpenAI's API. It allows you to simulate API responses for development and testing purposes.
 
 ## Features
 
 - Supports the following endpoints:
-
-  - `/v1/completions`
-  - `/v1/chat/completions`
-  - `/v1/images/generations`
+  - ~/v1/completions~
+  - /openai/deployments/:dummy/chat/completions
+  - ~/v1/images/generations~
 
 - Allows you to specify the type of mock response: echo, random, or fixed.
 - Supports both single responses and streaming responses.
