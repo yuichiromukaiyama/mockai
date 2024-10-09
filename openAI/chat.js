@@ -5,7 +5,7 @@ const delay = require("../utils/delay")
 
 const router = express.Router();
 
-router.post("/v1/chat/completions", async (req, res) => {
+router.post("/openai/deployments/:dummy/chat/completions", async (req, res) => {
   const delayHeader = req.headers["x-set-response-delay-ms"]
 
   let delayTime = parseInt(delayHeader) || 0
